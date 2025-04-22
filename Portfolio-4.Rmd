@@ -1,0 +1,155 @@
+---
+title: "Portfolio 4: Demographic and Pre-Screen Info"
+Date: "4/22/2025"
+output: html_document
+---
+
+```{r random, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+As per journal guidelines, I had to report demographic information for my submission. Additionally, I reported some brief descriptive information on the major life events experienced by my sample, which was pertinent to the research question. For this portfolio piece, I will be recreating these preliminary analyses with my newly minted .rds files. 
+
+```{r setup}
+
+library(tidyverse)
+library(readr)
+library(janitor)
+
+demographic_data <- readRDS("demographic_data.rds")
+life_event_data <- readRDS("life_event_data.rds")
+
+```
+
+## Demographics
+
+```{r cleanup}
+
+demographic_data <- demographic_data %>% clean_names()
+
+names(demographic_data)
+
+#had to clean these variables out
+demographic_data <- demographic_data %>%
+  select(-matches("^x(7|8|9|10|11|12|13)$"))
+
+```
+
+```{r descriptives_dems}
+
+# Age
+demographic_data %>%
+  summarise(
+    mean_Age = mean(age, na.rm = TRUE),
+    sd_Age = sd(age, na.rm = TRUE),
+    min_Age = min(age, na.rm = TRUE),
+    max_Age = max(age, na.rm = TRUE)
+  )
+
+# Sex
+demographic_data %>%
+  count(sex) %>%
+  mutate(prop = round(n / sum(n), 3))
+
+# Cleaner categorical tables
+demographic_data %>% tabyl("ethnicity_simplified")
+demographic_data %>% tabyl("student_status")
+demographic_data %>% tabyl("employment_status")
+
+```
+
+
+This is great, and mimmicks what I found and reported on excel. Now lets move onto the life events pre-screen data I have. 
+
+## Pre-Screen Life-EVents
+
+```{r pre_screen}
+
+names(life_event_data)
+
+```
+```{r cleaning}
+
+# The variable names are hideous so lets fix that and remove some of the unnecessary ones
+
+library(dplyr)
+
+life_event_data <- life_event_data %>%
+  select(-c(18:22))
+
+life_event_data <- life_event_data %>%
+  rename(
+    separated_partner = Separatedfromspouseorlongtermpartner,
+    injury_self = Seriouspersonalinjuryorillnesstoself,
+    injury_family = Seriouspersonalinjuryorillnesstocloserelativefamilymember,
+    death_spouse_child = Deathofspouseorchild,
+    death_relative = Deathofothercloserelativefamilymembere.g.parentorsibling,
+    death_friend = Deathofaclosefriend,
+    victim_physical = Victimofphysicalviolencee.g.assault,
+    victim_property = Victimofpropertycrimee.g.thefthousebreaking,
+    jailed_self = Detainedinjailcorrectionalfacility,
+    jailed_family = Closefamilymemberdetainedinjailcorrectionalfacility,
+    job_loss = Firedlaidofformaderedundantbyanemployer,
+    financial_decline = Majorworseninginfinancialsituatione.g.wentbankrupt,
+    natural_disaster = Aweatherrelateddisastere.g.floodbushfirecyclonedamagedordestroye,
+    fire_or_explosion = Afireexplosiondamagedordestroyedyourhomeproperty,
+    sexual_assault = Victimofsexualassaultviolence,
+    transportation_accident = Serioustransportationaccidentcaraccidentboataccidentshipwreckair,
+    other_life_event = Haveyouexperiencedanymajorlifeeventnotlistedaboveifyespleasespec
+  )
+
+# Verified!
+names(life_event_data)
+
+```
+
+```{r summarize_life_events}
+
+life_event_data %>%
+  summarise(across(
+    everything(),
+    ~sum(. == 1, na.rm = TRUE)
+  )) %>%
+  pivot_longer(cols = everything(), names_to = "life_event", values_to = "count") %>%
+  mutate(
+    percent = round(100 * count / nrow(life_event_data), 1)
+  ) %>%
+  arrange(desc(count))
+
+```
+
+I have been curious to try the R package that can turn stuff into APA tables since that formatting is so annoying. So let's give it a go
+
+```{r APA}
+
+library(knitr)
+library(kableExtra)
+
+life_events_summary <- life_event_data %>%
+  summarise(across(
+    everything(),
+    ~sum(. == 1, na.rm = TRUE)
+  )) %>%
+  pivot_longer(cols = everything(), names_to = "Life Event", values_to = "n") %>%
+  mutate(
+    Percent = round(100 * n / nrow(life_event_data), 1),
+    `Life Event` = str_replace_all(`Life Event`, "_", " ") %>%
+      str_to_title()
+  ) %>%
+  arrange(desc(n))
+
+# Display as APA-style table
+life_events_summary %>%
+  kable(
+    caption = "Frequencies and Percentages of Life Events Experienced",
+    col.names = c("Life Event", "Frequency", "Percentage"),
+    align = c("l", "c", "c"),
+    format = "html"
+  ) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = "center")
+
+```
+
+That is so cool! Not perfect, but much closer to APA format than a SPSS exported table. 
+
+Now that these easier, preliminary analyses are replicated, I can move onto the other stuff. 
