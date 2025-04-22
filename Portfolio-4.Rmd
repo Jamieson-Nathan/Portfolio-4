@@ -148,8 +148,24 @@ life_events_summary %>%
   ) %>%
   kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE, position = "center")
 
+#Lets fine-tune it even more
+life_events_summary %>%
+  kable(
+    col.names = c("Life Event", "Frequency", "Percentage"),
+    align = c("l", "c", "c"),
+    format = "html",
+    caption = "<b>Table 1</b><br><em>Frequencies and percentages of life events experienced.</em>"
+  ) %>%
+  kable_styling(
+    full_width = FALSE,
+    position = "center",
+    html_font = "Times New Roman",
+    bootstrap_options = NULL,  # No striping or borders
+    stripe_color = NULL
+  ) %>%
+  column_spec(1:3, extra_css = "border-bottom: none; border-top: none;")
+
+
 ```
 
-That is so cool! Not perfect, but much closer to APA format than a SPSS exported table. 
-
-Now that these easier, preliminary analyses are replicated, I can move onto the other stuff. 
+That is so cool! I wish I had used R to make all my tables. Awesome, Now that is sorted, time to move onto my other analyses. 

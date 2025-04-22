@@ -998,10 +998,232 @@ Death Spouse Child
 </tr>
 </tbody>
 </table>
-<p>That is so cool! Not perfect, but much closer to APA format than a
-SPSS exported table.</p>
-<p>Now that these easier, preliminary analyses are replicated, I can
-move onto the other stuff.</p>
+<pre class="r"><code>#Lets fine-tune it even more
+life_events_summary %&gt;%
+  kable(
+    col.names = c(&quot;Life Event&quot;, &quot;Frequency&quot;, &quot;Percentage&quot;),
+    align = c(&quot;l&quot;, &quot;c&quot;, &quot;c&quot;),
+    format = &quot;html&quot;,
+    caption = &quot;&lt;b&gt;Table 1&lt;/b&gt;&lt;br&gt;&lt;em&gt;Frequencies and percentages of life events experienced.&lt;/em&gt;&quot;
+  ) %&gt;%
+  kable_styling(
+    full_width = FALSE,
+    position = &quot;center&quot;,
+    html_font = &quot;Times New Roman&quot;,
+    bootstrap_options = NULL,  # No striping or borders
+    stripe_color = NULL
+  ) %&gt;%
+  column_spec(1:3, extra_css = &quot;border-bottom: none; border-top: none;&quot;)</code></pre>
+<table class="table" style="font-family: Times New Roman; width: auto !important; margin-left: auto; margin-right: auto;">
+<caption>
+<b>Table 1</b><br><em>Frequencies and percentages of life events
+experienced.</em>
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;">
+Life Event
+</th>
+<th style="text-align:center;">
+Frequency
+</th>
+<th style="text-align:center;">
+Percentage
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Injury Family
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+67
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+36.4
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Death Relative
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+49
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+26.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Financial Decline
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+45
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+24.5
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Death Friend
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+44
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+23.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Injury Self
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+36
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+19.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Other Life Event
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+27
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+14.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Job Loss
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+26
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+14.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Victim Property
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+22
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+12.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Jailed Family
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+20
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+10.9
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Transportation Accident
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+19
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+10.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Natural Disaster
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+18
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+9.8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Victim Physical
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+14
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+7.6
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Separated Partner
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+13
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+7.1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Fire Or Explosion
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+11
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+6.0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Jailed Self
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+6
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+3.3
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Sexual Assault
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+5
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+2.7
+</td>
+</tr>
+<tr>
+<td style="text-align:left;border-bottom: none; border-top: none;">
+Death Spouse Child
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+3
+</td>
+<td style="text-align:center;border-bottom: none; border-top: none;">
+1.6
+</td>
+</tr>
+</tbody>
+</table>
+<p>That is so cool! I wish I had used R to make all my tables. Awesome,
+Now that is sorted, time to move onto my other analyses.</p>
 </div>
 
 
